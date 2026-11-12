@@ -7,6 +7,7 @@ using Android.Opengl;
 using Android.Views;
 using Android.Widget;
 using MobileEngine.Engine;
+using MeshType = MobileEngine.Engine.MeshType;
 
 namespace MobileEngine.Editor;
 
