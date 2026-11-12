@@ -1,0 +1,26 @@
+name: Build APK
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Install Android workload
+        run: dotnet workload install android
+      - name: Build APK
+        run: dotnet build Android/MobileEngine.Android.csproj -c Debug -p:AcceptAndroidSDKLicenses=true
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MobileEngine-apk
+          path: Android/bin/Debug/net8.0-android/**/*-Signed.apk
