@@ -7,6 +7,7 @@ using Android.Opengl;
 using Android.Views;
 using Android.Widget;
 using MobileEngine.Engine;
+using Spinner = MobileEngine.Engine.Spinner;
 using MeshType = MobileEngine.Engine.MeshType;
 
 namespace MobileEngine.Editor;
@@ -295,12 +296,12 @@ public class MainActivity : Activity
     string ScenePath =>
         System.IO.Path.Combine(GetExternalFilesDir(null)?.AbsolutePath ?? FilesDir!.AbsolutePath, "scene.json");
 
-    void Toast(string msg) => Android.Widget.Toast.MakeText(this, msg, ToastLength.Long)?.Show();
+    void ShowToast(string msg) => Toast.MakeText(this, msg, ToastLength.Long)?.Show();
 
     void SaveScene()
     {
-        try { System.IO.File.WriteAllText(ScenePath, _ed.Scene.ToJson()); Toast("Saved: " + ScenePath); }
-        catch (Exception ex) { Toast("Save failed: " + ex.Message); }
+        try { System.IO.File.WriteAllText(ScenePath, _ed.Scene.ToJson()); ShowToast("Saved: " + ScenePath); }
+        catch (Exception ex) { ShowToast("Save failed: " + ex.Message); }
     }
 
     void LoadScene()
@@ -308,10 +309,10 @@ public class MainActivity : Activity
         try
         {
             if (_ed.Playing) TogglePlay();
-            if (!System.IO.File.Exists(ScenePath)) { Toast("No saved scene yet"); return; }
+            if (!System.IO.File.Exists(ScenePath)) { ShowToast("No saved scene yet"); return; }
             _ed.Scene.FromJson(System.IO.File.ReadAllText(ScenePath));
-            Toast("Loaded"); Refresh();
+            ShowToast("Loaded"); Refresh();
         }
-        catch (Exception ex) { Toast("Load failed: " + ex.Message); }
+        catch (Exception ex) { ShowToast("Load failed: " + ex.Message); }
     }
 }

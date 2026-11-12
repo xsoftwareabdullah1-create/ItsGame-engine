@@ -1,5 +1,6 @@
 using System.Numerics;
 using MobileEngine.Engine;
+using Spinner = MobileEngine.Engine.Spinner;
 
 namespace MobileEngine.Editor;
 
